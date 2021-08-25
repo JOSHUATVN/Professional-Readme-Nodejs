@@ -55,10 +55,25 @@ const questions = [{
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-function init() {}
-
+const generateReadme = (fileName, data) => {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+  };
+  
+  const init = () => {
+    inquirer
+      .prompt(questions)
+      .then(userResponse => {
+        console.log('Generating README...');
+        console.log(userResponse);
+  
+        generateReadme('README.md', template(userResponse));
+      })
+      .catch(err => {
+        if (err) {
+          throw err;
+        }
+      });
+  };
+  
 // Function call to initialize app
 init();
